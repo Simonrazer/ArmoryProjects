@@ -1,0 +1,31 @@
+package armory.logicnode;
+
+class ArrayLoopIndiceNode extends LogicNode {
+
+	var value:Dynamic;
+	var index:Int;
+
+	public function new(tree:LogicTree) {
+		super(tree);
+	}
+
+	override function run(from:Int) {
+		var ar:Array<Dynamic> = inputs[1].get();
+		if(ar == null) return;
+		index = 0;
+		for (val in ar) {
+			value = val;
+			index = index +1;
+
+			runOutput(0);
+		}
+		runOutput(2);
+	}
+	
+	override function get(from:Int):Dynamic {
+		if (from == 1) return value;
+		else if (from == 3) return index;
+		else return index;
+		
+	}
+}

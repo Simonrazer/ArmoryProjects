@@ -1,0 +1,127 @@
+package arm.node;
+
+@:keep class Ball extends armory.logicnode.LogicTree {
+
+	var functionNodes:Map<String, armory.logicnode.FunctionNode>;
+
+	var functionOutputNodes:Map<String, armory.logicnode.FunctionOutputNode>;
+
+	public function new() {
+		super();
+		name = "Ball";
+		this.functionNodes = new Map();
+		this.functionOutputNodes = new Map();
+		notifyOnAdd(add);
+	}
+
+	override public function add() {
+		var _SetVelocity = new armory.logicnode.SetVelocityNode(this);
+		var _SetLocation_002 = new armory.logicnode.SetLocationNode(this);
+		var _SetLocation_001 = new armory.logicnode.SetLocationNode(this);
+		var _SetLocation = new armory.logicnode.SetLocationNode(this);
+		var _Merge = new armory.logicnode.MergeNode(this);
+		var _CanvasSetText = new armory.logicnode.CanvasSetTextNode(this);
+		var _SetVariable = new armory.logicnode.SetVariableNode(this);
+		var _Gate = new armory.logicnode.GateNode(this);
+		_Gate.property0 = "Greater Equal";
+		_Gate.property1 = 9.999999747378752e-05;
+		var _OnUpdate = new armory.logicnode.OnUpdateNode(this);
+		_OnUpdate.property0 = "Update";
+		_OnUpdate.addOutputs([_Gate]);
+		_Gate.addInput(_OnUpdate, 0);
+		var _SeparateXYZ = new armory.logicnode.SeparateVectorNode(this);
+		var _GetLocation = new armory.logicnode.GetLocationNode(this);
+		_GetLocation.addInput(new armory.logicnode.ObjectNode(this, "Ball"), 0);
+		_GetLocation.addOutputs([_SeparateXYZ]);
+		_SeparateXYZ.addInput(_GetLocation, 0);
+		var _Gate_001 = new armory.logicnode.GateNode(this);
+		_Gate_001.property0 = "Less Equal";
+		_Gate_001.property1 = 9.999999747378752e-05;
+		_Gate_001.addInput(_Gate, 1);
+		_Gate_001.addInput(_SeparateXYZ, 0);
+		var _Float_001 = new armory.logicnode.FloatNode(this);
+		_Float_001.addInput(new armory.logicnode.FloatNode(this, -21.5), 0);
+		_Float_001.addOutputs([_Gate_001]);
+		_Gate_001.addInput(_Float_001, 0);
+		var _SetVariable_001 = new armory.logicnode.SetVariableNode(this);
+		_SetVariable_001.addInput(_Gate_001, 0);
+		var _Integer_001 = new armory.logicnode.IntegerNode(this);
+		_Integer_001.addInput(new armory.logicnode.IntegerNode(this, 0), 0);
+		var _Math_001 = new armory.logicnode.MathNode(this);
+		_Math_001.property0 = "Add";
+		_Math_001.property1 = "false";
+		_Math_001.addInput(_Integer_001, 0);
+		_Math_001.addInput(new armory.logicnode.FloatNode(this, 1.0), 0);
+		_Math_001.addOutputs([_SetVariable_001]);
+		var _CanvasSetText_001 = new armory.logicnode.CanvasSetTextNode(this);
+		_CanvasSetText_001.addInput(_SetVariable_001, 0);
+		_CanvasSetText_001.addInput(new armory.logicnode.StringNode(this, "s2"), 0);
+		_CanvasSetText_001.addInput(_Integer_001, 0);
+		_CanvasSetText_001.addOutputs([_Merge]);
+		_Integer_001.addOutputs([_SetVariable_001, _Math_001, _CanvasSetText_001]);
+		_SetVariable_001.addInput(_Integer_001, 0);
+		_SetVariable_001.addInput(_Math_001, 0);
+		_SetVariable_001.addOutputs([_CanvasSetText_001]);
+		_Gate_001.addOutputs([_SetVariable_001]);
+		_Gate_001.addOutputs([new armory.logicnode.NullNode(this)]);
+		_SeparateXYZ.addOutputs([_Gate, _Gate_001]);
+		_SeparateXYZ.addOutputs([new armory.logicnode.FloatNode(this, 0.0)]);
+		_SeparateXYZ.addOutputs([new armory.logicnode.FloatNode(this, 0.0)]);
+		_Gate.addInput(_SeparateXYZ, 0);
+		var _Float = new armory.logicnode.FloatNode(this);
+		_Float.addInput(new armory.logicnode.FloatNode(this, 21.5), 0);
+		_Float.addOutputs([_Gate]);
+		_Gate.addInput(_Float, 0);
+		_Gate.addOutputs([_SetVariable]);
+		_Gate.addOutputs([_Gate_001]);
+		_SetVariable.addInput(_Gate, 0);
+		var _Integer = new armory.logicnode.IntegerNode(this);
+		_Integer.addInput(new armory.logicnode.IntegerNode(this, 0), 0);
+		var _Math = new armory.logicnode.MathNode(this);
+		_Math.property0 = "Add";
+		_Math.property1 = "false";
+		_Math.addInput(_Integer, 0);
+		_Math.addInput(new armory.logicnode.FloatNode(this, 1.0), 0);
+		_Math.addOutputs([_SetVariable]);
+		_Integer.addOutputs([_Math, _SetVariable, _CanvasSetText]);
+		_SetVariable.addInput(_Integer, 0);
+		_SetVariable.addInput(_Math, 0);
+		_SetVariable.addOutputs([_CanvasSetText]);
+		_CanvasSetText.addInput(_SetVariable, 0);
+		_CanvasSetText.addInput(new armory.logicnode.StringNode(this, "s1"), 0);
+		_CanvasSetText.addInput(_Integer, 0);
+		_CanvasSetText.addOutputs([_Merge]);
+		_Merge.addInput(_CanvasSetText, 0);
+		_Merge.addInput(_CanvasSetText_001, 0);
+		_Merge.addOutputs([_SetLocation]);
+		_SetLocation.addInput(_Merge, 0);
+		_SetLocation.addInput(new armory.logicnode.ObjectNode(this, "Player_1"), 0);
+		_SetLocation.addInput(new armory.logicnode.VectorNode(this, -13.0, 0.0, 1.0), 0);
+		_SetLocation.addOutputs([_SetLocation_001]);
+		_SetLocation_001.addInput(_SetLocation, 0);
+		_SetLocation_001.addInput(new armory.logicnode.ObjectNode(this, "Player_2"), 0);
+		_SetLocation_001.addInput(new armory.logicnode.VectorNode(this, 13.0, 0.0, 1.0), 0);
+		_SetLocation_001.addOutputs([_SetLocation_002]);
+		_SetLocation_002.addInput(_SetLocation_001, 0);
+		_SetLocation_002.addInput(new armory.logicnode.ObjectNode(this, "Ball"), 0);
+		_SetLocation_002.addInput(new armory.logicnode.VectorNode(this, 0.0, 0.0, 1.0), 0);
+		_SetLocation_002.addOutputs([_SetVelocity]);
+		_SetVelocity.addInput(_SetLocation_002, 0);
+		_SetVelocity.addInput(new armory.logicnode.ObjectNode(this, "Ball"), 0);
+		_SetVelocity.addInput(new armory.logicnode.VectorNode(this, 0.0, 0.0, 0.0), 0);
+		_SetVelocity.addInput(new armory.logicnode.VectorNode(this, 1.0, 1.0, 1.0), 0);
+		_SetVelocity.addInput(new armory.logicnode.VectorNode(this, 0.0, 0.0, 0.0), 0);
+		_SetVelocity.addInput(new armory.logicnode.VectorNode(this, 1.0, 1.0, 1.0), 0);
+		_SetVelocity.addOutputs([new armory.logicnode.NullNode(this)]);
+		var _RotateObject = new armory.logicnode.RotateObjectNode(this);
+		_RotateObject.property0 = "Euler Angles";
+		var _OnKeyboard = new armory.logicnode.OnKeyboardNode(this);
+		_OnKeyboard.property0 = "Started";
+		_OnKeyboard.property1 = "6";
+		_OnKeyboard.addOutputs([_RotateObject]);
+		_RotateObject.addInput(_OnKeyboard, 0);
+		_RotateObject.addInput(new armory.logicnode.ObjectNode(this, "Camera"), 0);
+		_RotateObject.addInput(new armory.logicnode.VectorNode(this, 0.0, 0.0, 3.1415927410125732), 0);
+		_RotateObject.addOutputs([new armory.logicnode.NullNode(this)]);
+	}
+}
